@@ -5,6 +5,7 @@ elif [ "$1" -eq 1 ]; then
 else 
 	print "if you want to manual mode."
 	print "sh $0 1"
+	exit;
 fi
 logcheck(){
 currentfilename=`ls -lt DR_MONTHLY.log.* | head -1|awk '{print $9}'`
