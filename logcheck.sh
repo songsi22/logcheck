@@ -1,3 +1,5 @@
+##version 2
+#!/bin/ksh
 beep=0
 cri=0
 curfile=`ls -lt DR_MONTHLY.log.* | head -1|awk '{print $9}'`
@@ -5,8 +7,6 @@ tail -1 $curfile
 wc1=`cat $curfile|wc -l`
 trap trapInt 2
 trap trapQuit 3
-
-
 
 trapQuit()
 {
@@ -61,7 +61,7 @@ do
 	fi
 	if [ $wc1 != $wc2 ]; then
 		line=`tail -1 $curfile`
-		linesc=`echo -e \'$line\'|awk '{print $6}'`
+		linesc=`echo -e \'$line\'|awk '{print $7}'`
 		if [[ "Critical." == $linesc ]] || [[ "Failure" == $linesc ]]; then
 			cri=1
 			beep=1
