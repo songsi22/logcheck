@@ -10,13 +10,12 @@ logcheck(){
 curfile=`ls -lt DR_MONTHLY.log.* | head -1|awk '{print $9}'`
 tail -1 $curfile
 wc1=`cat $curfile|wc -l`
-#trap break 2
-#trap 'echo "\033[0;31mmanual mode to automatic mode\033[0m";cri=0;rm -rf core;break' 3
 trap trapInt 2
 trap trapQuit 3
 ctrlc_count_quit=0
 ctrlc_count_int=0
 beep=0
+
 trapQuit()
 {
     let ctrlc_count_quit++
@@ -34,6 +33,7 @@ trapQuit()
 		cri=0
 	fi
 }	
+
 trapInt()
 {
         let ctrlc_count_int++
@@ -55,6 +55,7 @@ trapInt()
 		break
     fi
 }
+
 while true
 do
 
