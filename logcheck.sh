@@ -66,6 +66,7 @@ do
 			beep=1
 			wc2=$wc1
 			echo '\033[0;41m\033[7m'$line'\033[0m'
+			echo '\t\t\t\t\033[0;41m'Manual mode'\033[0m'
 			while [ $beep == 1 ]
 			do
 				printf '\007'
@@ -124,4 +125,3 @@ do
 done
 }
 logcheck 2> /dev/null
-
