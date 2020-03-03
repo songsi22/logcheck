@@ -1,5 +1,6 @@
 ##version 2
 #!/bin/ksh
+logcheck(){
 beep=0
 cri=0
 curfile=`ls -lt DR_MONTHLY.log.* | head -1|awk '{print $9}'`
@@ -12,15 +13,15 @@ trapQuit()
 {
 	
     if [[ `expr $cri % 2` == 0 ]]; then
-		echo '\033[0;41m'Manual mode'\033[0m'
+		echo '\t\t\t\t\033[0;41m'Manual mode'\033[0m'
 		cri=1
 		beep=1
 	elif [[ $cri == 1 ]] && [[ $beep == 0 ]]; then
-		echo '\033[0;42m'Automatic mode'\033[0m'
+		echo '\t\t\t\t\033[0;42m'Automatic mode'\033[0m'
 		beep=0
 		cri=0
 	elif [[ $cri == 1 ]] && [[ $beep == 1 ]]; then
-		echo '\033[0;45m'Automatic mode'\033[0m'
+		echo '\t\t\t\t\033[0;42m'Automatic mode'\033[0m'
 		cri=0
 		beep=0
 		break
@@ -121,4 +122,6 @@ do
 		
 	fi
 done
+}
+logcheck 2> /dev/null
 
