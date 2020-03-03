@@ -12,15 +12,15 @@ trapQuit()
 {
     let ctrlc_count_quit++
     if [[ `expr $cri % 2` == 0 ]]; then
-		echo "Manual mode"
+		echo '\033[0;41m'Manual mode'\033[0m'
 		cri=1
 	elif [[ $beep == 1 ]] && [[ `expr $cri % 2` == 1 ]]; then
-		echo "Automatic mode"
+		echo '\033[0;42m'Automatic mode'\033[0m'
 		beep=0
 		cri=0
 		break
 	else
-		echo "Automatic mode"
+		echo '\033[0;42m'Automatic mode'\033[0m'
 		beep=0
 		cri=0
 	fi
