@@ -31,15 +31,13 @@ trapInt()
 {
     if [[ $beep == 0 ]]; then
 		echo "Do you want to close this program? yes | no ( y | n )"
-                read answer
-                case $answer in
-                                yes|Yes|y)
-                                                exit
-                                                ;;
-                                no|n)
-                                                continue
-                                                ;;
-                esac
+        read answer
+        case $answer in
+            yes|Yes|y)
+                exit;;
+            no|n)
+                continue;;
+        esac
     elif [[ $beep == 1 ]]; then
 		beep=0
 		break
