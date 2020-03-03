@@ -54,7 +54,7 @@ do
         wc2=`cat $curfile|wc -l`
         if [ $wc1 != $wc2 ]; then
                 line=`tail -1 $curfile`
-                linesc=`echo -e \'$line\'|awk '{print $6}'`
+                linesc=`echo -e \'$line\'|awk '{print $7}'`
 
                 if [[ "Critical." == $linesc ]] || [[ "Failure" == $linesc ]]; then
                         cri=1
