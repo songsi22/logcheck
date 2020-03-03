@@ -1,11 +1,3 @@
-if [ "$#" -lt 1 ]; then
-        cri=0
-elif [ "$1" -eq 1 ]; then
-        cri=1
-else
-        print "if you want to manual mode."
-        print "sh $0 1"
-fi
 logcheck(){
 curfile=`ls -lt DR_MONTHLY.log.* | head -1|awk '{print $9}'`
 tail -1 $curfile
