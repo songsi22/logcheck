@@ -1,4 +1,4 @@
-##version 2
+##version 2.1
 #!/bin/ksh
 logcheck(){
 beep=0
@@ -8,6 +8,7 @@ tail -1 $curfile
 wc1=`cat $curfile|wc -l`
 trap trapInt 2
 trap trapQuit 3
+warcnt=0
 
 trapQuit()
 {
@@ -60,8 +61,10 @@ do
 	fi
 	if [ $wc1 != $wc2 ]; then
 		line=`tail -1 $curfile`
-		linesc=`echo -e \'$line\'|awk '{print $7}'`
+		#### AIX $8, LINUX $7
+		linesc=`echo -e \'$line\'|awk '{print $8}'`
 		if [[ "Critical." == $linesc ]] || [[ "Failure" == $linesc ]]; then
+			warcnt=0
 			cri=1
 			beep=1
 			wc2=$wc1
@@ -97,10 +100,30 @@ do
 				fi
 			done
 			else
-				echo '\033[0;33m'$line'\033[0m'
+				warcnt=`expr $warcnt + 1`
+				echo warcnt $warcnt
+				wc2=$wc1
+				if [ $warcnt -ge 6 ]; then
+					beep=1
+					echo '\033[0;33m'$line'\033[0m'
+					while [ $beep == 1 ]
+					do
+						printf '\007'
+						wc1=`cat $curfile|wc -l`
+						sleep 3
+						if [ $wc1 != $wc2 ]; then
+							line=`tail -1 $curfile`
+							echo '\033[0;36m'$line'\033[0m'
+							break
+						fi
+					done
+				else
+					echo '\033[0;33m'$line'\033[0m'
+				fi
 			fi
 		else
 			if [ $cri == 1 ]; then
+			warcnt=0
 			beep=1
 			wc2=$wc1
 			echo '\033[0;36m'$line'\033[0m'
@@ -116,6 +139,7 @@ do
 				fi
 			done
 			else
+				warcnt=0
 				echo $line
 			fi
 			
